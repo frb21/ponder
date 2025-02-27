@@ -96,7 +96,7 @@ export const updateBlog = async (req, res) => {
         values.push(blogId);
        
         // Execute query with values
-        const [result] = await pool.query(query, values);
+       const [result] = await pool.query(query, values);
         
         if(result.affectedRows === 0){
             return res.status(404).json({ error: "Blog post not found or no changes was made." });
