@@ -20,7 +20,7 @@ export default function StartingPage() {
   }, [])
 
   return (
-    <div className="min-h-screen w-full bg-cover bg-center bg-fixed bg-no-repeat"
+    <div className="h-screen w-screen bg-cover bg-center snap-y"
         style={{ backgroundImage: `url(${background})` }}
     >
         <motion.div 
