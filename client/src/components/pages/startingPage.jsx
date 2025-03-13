@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import background from '../../assets/img/background.jpg';
@@ -6,6 +7,11 @@ import background from '../../assets/img/background.jpg';
 export default function StartingPage() {
   const [showButtons, setShowButtons] = useState(false);
   const [showdesc, setShowDesc] = useState(false);
+  const navigate = useNavigate();
+  
+  const handleClick = () => {
+    navigate('/signup');
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -36,6 +42,7 @@ export default function StartingPage() {
       {showButtons && (
         <motion.button
           initial={{ opacity: 0 }}
+          onClick={handleClick}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
           whileHover={{ backgroundColor: "#1f2937" }}
