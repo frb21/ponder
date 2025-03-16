@@ -1,13 +1,18 @@
 import {
     getMyProfile,
-    getUsers
+    getUsers,
+    getUser
 } from '../controllers/userController.js';
 import express from 'express'; 
 
 const userRouter = express.Router();
 
-userRouter.route('/users/:id')
+userRouter.route('/profile')
         .get(getMyProfile);
+
+userRouter.route('/users/:userId')
+    .get(getUser);
+
 
 userRouter.route('/users')
         .get(getUsers);

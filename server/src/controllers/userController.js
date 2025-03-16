@@ -6,7 +6,7 @@ export const getMyProfile = async (req, res) => {
         const userId = req.user.userId;
         const query = "SELECT userId, email FROM users WHERE userId = ?";
 
-        const [user] = pool.query(query, [userId]);
+        const [user] = await pool.query(query, [userId]);
 
         if(user.length === 0){
             return res.status(404).json({message: "User not found."});
@@ -36,6 +36,23 @@ export const getUsers =  async (req, res) => {
     }
 };
 
+export const getUser = async (req, res) => {
+    try{
+        const userId = req.params.userId
+        const query = "SELECT * FROM users WHERE userId = ?";
+        const [user] = await pool.query(query, [userId]);
+
+        if(user.length === 0){
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        res.status(200).json(user[0]);
+    }
+    catch(err){
+        console.error("Error:", err);
+        res.status(500).json({error: "Internal Server Error"});
+    }
+};
 
 
 
