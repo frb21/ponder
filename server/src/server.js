@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import blogRoutes from './routes/blogRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 import passport from './middleware/passport.js';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -17,6 +18,7 @@ app.use(passport.initialize());
 // Routes
 app.use('/auth', authRoutes);
 app.use('/api', blogRoutes);
+app.use('/user', userRoutes);
 
 
 app.listen(PORT, () => {

@@ -1,5 +1,5 @@
 // USER PROFILE CONTROLLERS
-import  pool from '../config/db.js';
+import  pool from '../config/dbconfig.js';
 
 export const getMyProfile = async (req, res) => {
     try{
@@ -24,7 +24,17 @@ export const getMyProfile = async (req, res) => {
     }
 };
 
-
+export const getUsers =  async (req, res) => {
+    try{
+        const query = "SELECT * FROM users";
+        const [users] = await pool.query(query);
+        res.status(200).json(users);
+    }
+    catch(err){
+        console.error(err);
+        res.status(500).json({error: "Internal Server Error"});
+    }
+};
 
 
 
