@@ -29,11 +29,7 @@ const FeedPage = () => {
             posts.map((post) => {
                 return (
                     <PostCard 
-                        key={post.id}
-                        authorId={post.authorId}
-                        title={post.title}
-                        content={post.content}
-                        createdAt={post.createdAt}
+                        post={post}
                     />
                 )
             })
