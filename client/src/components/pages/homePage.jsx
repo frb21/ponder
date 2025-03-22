@@ -8,7 +8,6 @@ import NavBar from './navBar.jsx';
 
 const FeedPage = () => {
   const [posts, setPosts] = useState([]);
-  //const [isOpen, setIsOpen] = useState(true);
 
   useEffect(() => {
     // Fetch posts
