@@ -3,6 +3,7 @@ import LoginPage from './components/pages/loginPage.jsx';
 import SignupPage from './components/pages/signupPage.jsx';
 import FeedPage from './components/pages/homePage.jsx';
 import PostCard from './components/pages/postCard.jsx';
+import ProtectedRoute from './components/pages/protectedRoute.jsx';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
 function App() {
@@ -12,7 +13,9 @@ function App() {
         <Route path="/" element={<StartingPage />}/>
         <Route path="/login" element={<LoginPage />}/>
         <Route path="/signup" element={<SignupPage />}/>
-        <Route path="/feed" element={<FeedPage />}/>
+        <Route element={<ProtectedRoute />}> 
+          <Route path="/feed" element={<FeedPage />}/>
+        </Route>
       </Routes>
     </Router>    
   );

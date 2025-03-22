@@ -31,7 +31,12 @@ export const loginUser = async (req, res) => {
         const [result] = await pool.query(query, [email]);
         const user = result[0];
 
-        if(user && comparePassword(password, user.password)){
+        if(!user){
+            return res.status(401).json({ error: "Invalid Credentials" });
+        }
+
+        const isValid = await comparePassword(password, user.password);
+        if(isValid){
             const token = jwt.sign({ userId: user.userId, email: user.email }, jwt_key, { expiresIn: '1h' });
             res.json({ token });
         } 

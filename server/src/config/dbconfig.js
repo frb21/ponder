@@ -1,5 +1,6 @@
 import mysql from 'mysql2/promise';
-//import "dotenv/config";
+import fs from "fs";
+
 
 // environment variables
 //const HOST = process.env.DB_HOST;
@@ -20,6 +21,7 @@ const pool = mysql.createPool({
     enableKeepAlive: true,
     keepAliveInitialDelay: 0,
 });
+
 
 export default pool;
 

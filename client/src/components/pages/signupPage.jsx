@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
   // states and updaters
@@ -8,6 +9,7 @@ const SignupPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,14 +55,17 @@ const SignupPage = () => {
         setSuccess("Signup Successful!");
         setError(null);
         console.log(success);
+
+        localStorage.setItem("token", data.token);
+        navigate("/feed");
       }
       else{
-        setError(data.message || "An error occurred.");
+        setError(data.error || "An error occurred.");
         setSuccess(null);
       }
     }
     catch(error){
-      setError("There was a problem.");
+      setError(error.message);
       console.log(error);
       setSuccess(null);
     }      

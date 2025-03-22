@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Home, User, PenLine } from 'lucide-react';
 import * as FaIcons from 'react-icons/fa';
 import SideBar from './sideBar.jsx';
@@ -8,6 +9,7 @@ import NavBar from './navBar.jsx';
 
 const FeedPage = () => {
   const [posts, setPosts] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch posts
@@ -17,6 +19,13 @@ const FeedPage = () => {
       .catch((error) => console.error("Error fetching posts: ", error))
 
   }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if(!token){
+      navigate("/login");
+    }
+  }, [navigate]);
 
   return (
     <section className="min-h-screen flex items-center font-mono bg-[#181818]">

@@ -23,7 +23,7 @@ const PostCard = ({ post }) => {
         <div className="bg-gray-300 shadow-md rounded-xl p-4 mb-6 max-w-lg w-full border border-gray-200 translate-x-50">
           <div className="flex items-center space-x-3">
             <div>
-              <img src={`http://localhost:5000/static/default.jpg`} alt="User" className="w-10 h-10 rounded-full border border-gray-300"></img>
+              <img src={user.profile_picture}  alt="Test" className="w-10 h-10 rounded-full border border-gray-300"></img>
                 <h3 className="font-semibold text-white-900">{user.fullname}</h3>
                 <p className="text-sm text-white-500">{formattedTime}</p>
             </div>  

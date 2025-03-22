@@ -1,6 +1,7 @@
 import React from 'react';
 import image from '../../assets/img/bgLogin.jpg';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const LoginPage = () => {
@@ -9,6 +10,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const navigate = useNavigate();
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -49,9 +51,13 @@ const LoginPage = () => {
         setSuccess("Login Successful!");
         setError(null);
         console.log(success);
+      
+        localStorage.setItem("token", data.token);
+
+        navigate("/feed");
       }
       else{
-        setError(data.message || "AN error occurred");
+        setError(data.error || "An error occurred");
         setSuccess(null);
       }
     }
@@ -71,6 +77,13 @@ const LoginPage = () => {
       return () => clearTimeout(timer);
     }
   }, [error]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if(token){
+      navigate("/feed");
+    }
+  }, [navigate]);
 
   return(
     <section className="min-h-screen flex items-center justify-center font-mono bg-gradient-to-r from-cyan-500 from-10% via-indigo-500 via-50% to-sky-500 to-100%">

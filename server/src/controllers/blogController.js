@@ -5,7 +5,11 @@ import pool from '../config/dbconfig.js';
 export const getAllBlogs = async (req, res) => {
     try{
         // Define query. 
-        const query = "SELECT * FROM posts;";
+        const query = `SELECT id, title, content, posts.createdAt, users.username, 
+                CONCAT('data:image/jpeg;base64,', TO_BASE64(users.profile_picture)) AS profile_pic
+                FROM posts JOIN users ON posts.authorId = users.userId
+                ORDER BY posts.createdAt DESC
+            `;
 
         // Execute query.
         const [blogs] = await pool.query(query); // SQL query to fetch all existing posts to the feed
