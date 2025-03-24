@@ -107,7 +107,7 @@ const LoginPage = () => {
           </div>
           <motion.p initial={{ opacity: 0, y: -5}} animate={error ? {opacity: 1, y:0} : {opacity: 0, y: -5}} transition={{ duration: 0.3 }} className="block text-red-500 m-0 p-0">{error}</motion.p>
           <motion.button animate={error ? { x: [-5, 5, -5, 5, 0], marginTop: 2} : { marginTop: -20 }} transition={{ duration: 0.3 }} type="submit" className="m-0 py-2 px-10 text-2xl rounded-md bg-gradient-to-tr from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white cursor-pointer">Login</motion.button>
-          <p className="font-semibold">Don't have an account? <a href="#" className="text-blue-400 hover:underline">Register</a></p>
+          <p className="font-semibold">Don't have an account? <a href="/signup" className="text-blue-400 hover:underline">Register</a></p>
         </div>
         <img src={image} alt="" className="w-[450px] object-cover xl:rounded-tr-2xl xl:rounded-br-2xl xl:block hidden"/>
       </div>

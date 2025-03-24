@@ -9,7 +9,7 @@ const NavBar = () => {
   return (
          <nav className="bg-[#282828] flex justify-between items-center w-full fixed top-0 left-0 py-2 shadow-md z-50">
             <div className="ml-10 text-3xl translate-x-5">
-             <a href="#" className="font-[Abocat] text-4xl font-bold text-black text-indigo-400">Ponder</a>
+             <a href="#" className="font-[Abocat] text-4xl font-bold text-black text-indigo-400">Agora</a>
             </div>
             <div className="flex flex-row items-center">
               <ul className="flex space-x-6 text-white text-lg">

@@ -13,7 +13,7 @@ const blogRouter = express.Router();
 
 blogRouter.route('/posts')
     .get(getAllBlogs)
-    .post(passport.authenticate("jwt", { session: false }), createBlog);
+    .post(createBlog);
 
 blogRouter.route('/post/:id')
     .get(passport.authenticate("jwt", { session: false }), getBlog)

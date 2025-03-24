@@ -4,19 +4,38 @@ import pool from '../config/dbconfig.js';
 // GET ALL BLOGS
 export const getAllBlogs = async (req, res) => {
     try{
-        // Define query. 
-        const query = `SELECT id, title, content, posts.createdAt, users.username, 
-                CONCAT('data:image/jpeg;base64,', TO_BASE64(users.profile_picture)) AS profile_pic
-                FROM posts JOIN users ON posts.authorId = users.userId
-                ORDER BY posts.createdAt DESC
+        const { cursor } = req.body;
+        const limit = 10;
+
+        let query;
+        let values;
+
+        if (cursor){
+            query = `SELECT id, title, content, createdAt, authorId
+                FROM posts 
+                WHERE createdAt < ? 
+                ORDER BY createdAt DESC
+                LIMIT ? 
             `;
+            values = [cursor, limit];
+        }
 
-        // Execute query.
-        const [blogs] = await pool.query(query); // SQL query to fetch all existing posts to the feed
+        else{
+            query = `
+                SELECT id, title, content, createdAt, authorId
+                FROM posts
+                ORDER BY createdAt DESC
+                LIMIT ?
+            `;
+            values = [limit];
+        }
 
-        // Return successful HTTP response to client.
-        res.status(200).json(blogs);        
-    }
+            const [posts] = await pool.query(query, values);
+
+            const nextCursor = posts.length > 0 ? posts[posts.length - 1].createdAt : null;
+
+            res.json({posts, nextCursor});
+        }  
     catch(err){
         console.error(err);
         res.status(500).json({error: "Internal Server Error"});   // Handle server error

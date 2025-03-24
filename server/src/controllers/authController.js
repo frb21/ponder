@@ -8,12 +8,12 @@ dotenv.config();
 const jwt_key = 'a35b322df3342a2d5e4d0996a4128756773754f595cc13d8c5805fd79f08ec44';
 // REGISTER USER
 export const registerUser = async (req, res) => {
-    const {name, email, password} = req.body;
+    const {email, password, username, fullname} = req.body;
     const hashedPassword = await hashPassword(password);
     
     try{
-        const query = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
-        await pool.query(query, [name, email, hashedPassword]);
+        const query = "INSERT INTO users (email, password, username, fullname) VALUES (?, ?, ?, ?)";
+        await pool.query(query, [email, hashedPassword, username, fullname]);
         res.status(201).json({message: 'User registered successfully'});
     }
     catch(err){

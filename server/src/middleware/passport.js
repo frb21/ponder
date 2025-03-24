@@ -8,6 +8,11 @@ passport.use(new Strategy({
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: jwt_key 
 }, async (jwtPayload, done) => {
+    const currentTime = Math.floor(Date.now() / 1000);
+    if(jwtPayload.exp < currentTime){
+        return done(null, false, {message: "Token expired"});
+    }
+
     const query = "SELECT * FROM users WHERE id = ?";
     const result = await pool.query(query, [jwtPayload.id]);
     const user = result[0];

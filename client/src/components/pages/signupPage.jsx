@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
   // states and updaters
+  const [username, setUsername] = useState('');
+  const [fullname, setFullname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -13,22 +15,26 @@ const SignupPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!email && !password){
-      setError('Both fields are required.');
+    if(!username && !fullname && !email && !password){
+      setError('All fields are required.');
       return;
     }
-    
-    if(!email){
+     
+    if(!username){
+      setError('Username is required.');
+    }
+
+    else if(!email){
       setError('Email is required.');
       return;
     }
 
-    if(!password){
+    else if(!password){
       setError('Password is required.');
       return;
     }
 
-    if(!/\S+@\S+\.\S+/.test(email)){
+    else if(!/\S+@\S+\.\S+/.test(email)){
       setError('Please enter a valid email address.');
       return;
     }
@@ -38,11 +44,13 @@ const SignupPage = () => {
 
     const userData = {
       email: email,
-      password: password
+      password: password,
+      username: username,
+      fullname: fullname
     };
 
     try{
-      const response = await fetch('http://localhost:5000/authRoutes/register', {
+      const response = await fetch('http://localhost:5000/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type' : 'application/json',
@@ -88,12 +96,22 @@ const SignupPage = () => {
         <div className="flex flex-col items-left justify-left p-20 gap-8 bg-white rounded-2xl">
           <h1 className="text-5xl font-bold">Register</h1>
           <p className="text-1xl">Setting up your account is only a few seconds away.</p>
-          <div className="flex flex-col text-2xl text-left gap-1">
+          <div className="flex flex-col text-xl text-left gap-1">
+            <span>Username</span>
+            <input type="text" onChange={(e) => setUsername(e.target.value)} className="rounded-md p-1 border-2 outline-none focus:border-pink-500 focus:bg-slate-50"/>
+          </div>
+          
+          <div className="flex flex-col text-xl text-left gap-1">
+            <span>Full Name</span>
+            <input type="text" onChange={(e) => setFullname(e.target.value)} className="rounded-md p-1 border-2 outline-none focus:border-pink-500 focus:bg-slate-50"/>
+          </div>
+
+          <div className="flex flex-col text-xl text-left gap-1">
             <span>Email</span>
             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="rounded-md p-1 border-2 outline-none focus:border-pink-500 focus:bg-slate-50"/>
           </div> 
 
-          <div className="flex flex-col text-2xl text-left gap-1">
+          <div className="flex flex-col text-xl text-left gap-1">
             <span>Password</span>
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="rounded-md p-1 border-2 outline-none focus:border-pink-500 focus:bg-slate-50" />
             </div>
