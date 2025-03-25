@@ -1,5 +1,5 @@
 import React from 'react';
-import {  useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Home, User, PenLine } from 'lucide-react';
 import * as FaIcons from 'react-icons/fa';
@@ -7,7 +7,7 @@ import SideBar from './sideBar.jsx';
 import PostCard from './postCard.jsx';
 import NavBar from './navBar.jsx';
 import { useInfiniteQuery } from '@tanstack/react-query';
-
+import CreatePost from './createPost.jsx';
 
 const fetchPosts = async ({ pageParam = null }) => {
   const res = await fetch(`http://localhost:5000/api/posts?cursor=${pageParam || ''}`);
@@ -21,6 +21,7 @@ const fetchPosts = async ({ pageParam = null }) => {
 
 const FeedPage = () => {
 const navigate = useNavigate();
+const [createPost, setCreatePost] = useState(false);
 
   const { 
     data,
@@ -56,12 +57,13 @@ const navigate = useNavigate();
   if(status == 'error') return <div className="flex items-center justify-center text-white translate-x-70"><img src="/loading.gif" className="w-10 h-10 p-2 -translate-y-0.5"></img><h1 className="text-2xl font-bold">Connecting to the server...</h1></div> 
 
   return (
-    <section className="flex h-screen items-center font-mono bg-[#181818]">
-      <NavBar />
+    <section className="flex h-screen items-center font-mono bg-[#181818] relative">
+      <NavBar setCreatePost={setCreatePost} />
+      <CreatePost createPost={createPost} setCreatePost={setCreatePost}/>
       <div className="flex-shrink-0 h-full fixed">
           <SideBar />
       </div>
-
+      
       <div className="flex-1 flex-col p-6 mt-60 mb-40 ml-64 overflow-y-auto h-screen">
         {data?.pages?.map((group, i) =>  (
           <React.Fragment key={i}>
